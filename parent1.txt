@@ -1,1 +1,27 @@
-parent 1
+isFullWidth(rowNode) {
+    if (rowNode.data.cust) {
+      return true;
+    }
+  }
+
+  previousIndex: any;
+  obj: any;
+  rowClicked(event) {
+    if (event.data.id != 1) {
+      if (this.obj) {
+        this.agGrid.api.applyTransaction({
+          addIndex: event.rowIndex + 1,
+          remove: [this.obj]
+        })
+      }
+      this.obj = { id: 1, cust: true };
+      if (this.previousIndex != event.rowIndex) {
+      }
+      this.agGrid.api.applyTransaction({
+        addIndex: this.previousIndex < event.rowIndex ? event.rowIndex : event.rowIndex + 1,
+        add: [this.obj]
+      })
+      this.agGrid.api.redrawRows();
+      this.previousIndex = event.rowIndex;
+    }
+  }
